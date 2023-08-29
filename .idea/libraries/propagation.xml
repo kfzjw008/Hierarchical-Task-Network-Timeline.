@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="propagation">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/examples/propagation/antlr.jar!/" />
+      <root url="jar://$PROJECT_DIR$/examples/propagation/JSHOP2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
