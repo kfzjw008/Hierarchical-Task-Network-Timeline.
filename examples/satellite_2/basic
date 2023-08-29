@@ -1,0 +1,12 @@
+; This extremely simple example shows some of the most essential
+; features of SHOP2.
+
+(defdomain basic (
+  (:operator (!operator1 ?a) () () ((canshu ?a)))
+  (:operator (!operator2 ?a) ((canshu ?a)) ((canshu ?a)) ())
+
+  (:method (swap ?x ?y)
+    ((canshu ?x) (not (canshu ?y)))
+    ((!operator2 ?x) (!operator1 ?y))
+    ((canshu ?y) (not (canshu ?x)))
+    ((!operator2 ?y) (!operator1 ?x)))))
