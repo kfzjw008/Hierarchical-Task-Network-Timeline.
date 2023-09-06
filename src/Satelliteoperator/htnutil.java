@@ -56,7 +56,9 @@ public class htnutil {
                     "java JSHOP2.InternalDomain "+domainname+"\n" +
                     "java JSHOP2.InternalDomain -r "+problemname+"\n" +
                     "javac problem.java\n" +
-                    "java problem\n");
+                    "java problem\n"+" del *.java\n" +
+                            "  del *.txt\n" +
+                            "  del *.class");
             rd.close();
             out.close();
         } catch (IOException e) {

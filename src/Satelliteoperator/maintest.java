@@ -22,9 +22,9 @@ public class maintest {
 
 
         //生成problem文件
-        writefile("default"," (defproblem problem basic((have kiwi))((swap banjo kiwi)))","problem");
+      //  writefile("default"," (defproblem problem basic((have kiwi))((swap banjo kiwi)))","problem");
         //生成domain文件
-        writefile("default","(defdomain basic ((:operator (!pickup ?a) () () ((have ?a)))(:operator (!drop ?a) ((have ?a)) ((have ?a)) ())(:method (swap ?x ?y)((have ?x) (not (have ?y)))((!drop ?x) (!pickup ?y))((have ?y) (not (have ?x)))((!drop ?y) (!pickup ?x)))))","domain");
+       // writefile("default","(defdomain basic ((:operator (!pickup ?a) () () ((have ?a)))(:operator (!drop ?a) ((have ?a)) ((have ?a)) ())(:method (swap ?x ?y)((have ?x) (not (have ?y)))((!drop ?x) (!pickup ?y))((have ?y) (not (have ?x)))((!drop ?y) (!pickup ?x)))))","domain");
         //生成make文件
         createbat("problem","domain_satellite","default");
 
