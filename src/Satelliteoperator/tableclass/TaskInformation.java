@@ -17,6 +17,14 @@ public class TaskInformation {
         this.name = name;
     }
 
+    public TaskInformation(String name, String id, String zh, int time, int yxj) {
+        this.name = name;
+        this.id = id;
+        this.zh = zh;
+        this.time = time;
+        this.yxj = yxj;
+    }
+
     public String getId() {
         return id;
     }
@@ -33,11 +41,11 @@ public class TaskInformation {
         this.zh = zh;
     }
 
-    public String getTime() {
+    public int  getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -52,6 +60,6 @@ public class TaskInformation {
     private String id;
 
     private String zh;
-    private String time;
+    private int time;
     private int yxj;
 }
