@@ -1,0 +1,57 @@
+package Satelliteoperator.tableclass;
+
+/**
+ * @program: JSHOP2
+ * @description: 任务信息配置表单行的仿真
+ * @author: kfzjw008(Junwei Zhang)
+ * @create: 2023-09-09 13:39
+ **/
+public class TaskInformation {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getZh() {
+        return zh;
+    }
+
+    public void setZh(String zh) {
+        this.zh = zh;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getYxj() {
+        return yxj;
+    }
+
+    public void setYxj(int yxj) {
+        this.yxj = yxj;
+    }
+
+    private String id;
+
+    private String zh;
+    private String time;
+    private int yxj;
+}

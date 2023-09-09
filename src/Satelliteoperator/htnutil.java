@@ -2,6 +2,7 @@ package Satelliteoperator;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 /**
  * @program: JSHOP2
@@ -111,5 +112,14 @@ public class htnutil {
 
     }
 
+  public  static ArrayList<String> timelinesplit(String result){
+       ArrayList<String> TaskLevelRepository = new ArrayList<>();
+      String[] TaskLevelRepositorytemp = result.split("\\)");
+      for (int i = 0; i < TaskLevelRepositorytemp.length; i++) {
+          TaskLevelRepository.add(TaskLevelRepositorytemp[i]);
 
+      }
+      System.out.println(TaskLevelRepository);
+      return  TaskLevelRepository;
+  }
 }
