@@ -1,8 +1,10 @@
-package Satelliteoperator;
+package Satelliteoperator.Util;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @program: JSHOP2
@@ -14,11 +16,11 @@ public class htnutil {
 
 
     // 输入 path：Problem文件的生成地点	content：Problem文件的内容
-    public static void writefile(String path, String content,String type) throws IOException {
-        if(type.equals("problem")){
+    public static void writefile(String path, String content, String type) throws IOException {
+        if (type.equals("problem")) {
             try {
-                if(path.equals("default"))
-                    path="./bin/PROBLEM/problem";
+                if (path.equals("default"))
+                    path = "./bin/PROBLEM/problem";
                 File file = new File(path); // 不指定新建文件类型，即可生成“文件”类型给JSHOP2调用。
                 OutputStream out = new FileOutputStream(file);
                 BufferedWriter rd = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
@@ -28,10 +30,11 @@ public class htnutil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }if(type.equals("domain")){
+        }
+        if (type.equals("domain")) {
             try {
-                if(path.equals("default"))
-                    path="./bin/PROBLEM/domain_satellite";
+                if (path.equals("default"))
+                    path = "./bin/PROBLEM/domain_satellite";
                 File file = new File(path); // 不指定新建文件类型，即可生成“文件”类型给JSHOP2调用。
                 OutputStream out = new FileOutputStream(file);
                 BufferedWriter rd = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
@@ -46,18 +49,18 @@ public class htnutil {
     }
 
 
-    public static void createbat(String problemname,String domainname,String path){
+    public static void createbat(String problemname, String domainname, String path) {
         try {
-            if(path.equals("default"))
-                path="./bin/PROBLEM/make.bat";
+            if (path.equals("default"))
+                path = "./bin/PROBLEM/make.bat";
             File file = new File(path); // 不指定新建文件类型，即可生成“文件”类型给JSHOP2调用。
             OutputStream out = new FileOutputStream(file);
             BufferedWriter rd = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
             rd.write(
-                    "java JSHOP2.InternalDomain "+domainname+"\n" +
-                    "java JSHOP2.InternalDomain -r "+problemname+"\n" +
-                    "javac problem.java\n" +
-                    "java problem\n"+" del *.java\n" +
+                    "java JSHOP2.InternalDomain " + domainname + "\n" +
+                            "java JSHOP2.InternalDomain -r " + problemname + "\n" +
+                            "javac problem.java\n" +
+                            "java problem\n" + " del *.java\n" +
                             "  del *.txt\n" +
                             "  del *.class");
             rd.close();
@@ -112,14 +115,29 @@ public class htnutil {
 
     }
 
-  public  static ArrayList<String> timelinesplit(String result){
-       ArrayList<String> TaskLevelRepository = new ArrayList<>();
-      String[] TaskLevelRepositorytemp = result.split("\\)");
-      for (int i = 0; i < TaskLevelRepositorytemp.length; i++) {
-          TaskLevelRepository.add(TaskLevelRepositorytemp[i]);
+    public static ArrayList<String> timelinesplit(String result) {
+        ArrayList<String> TaskLevelRepository = new ArrayList<>();
+        String[] TaskLevelRepositorytemp = result.split("\\)");
+        for (int i = 0; i < TaskLevelRepositorytemp.length; i++) {
+            TaskLevelRepository.add(TaskLevelRepositorytemp[i]);
 
-      }
-      System.out.println(TaskLevelRepository);
-      return  TaskLevelRepository;
-  }
+        }
+        //System.out.println(TaskLevelRepository);
+        return TaskLevelRepository;
+    }
+
+    public static String tiqu(String string) {
+        String input = string;
+        String pattern = "!([a-zA-Z0-9]+)";
+
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(input);
+
+        if (m.find()) {
+            return m.group(1);
+            // System.out.println(result);
+        }  //  System.out.println("未找到匹配");
+
+        return "";
+    }
 }

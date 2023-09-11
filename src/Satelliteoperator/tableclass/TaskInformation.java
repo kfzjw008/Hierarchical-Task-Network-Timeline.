@@ -17,12 +17,13 @@ public class TaskInformation {
         this.name = name;
     }
 
-    public TaskInformation(String name, String id, String zh, int time, int yxj) {
+    public TaskInformation(String name, String id, String zh, int time, int yxj,int R1) {
         this.name = name;
         this.id = id;
         this.zh = zh;
         this.time = time;
         this.yxj = yxj;
+        this.R1=R1;
     }
 
     public String getId() {
@@ -59,7 +60,16 @@ public class TaskInformation {
 
     private String id;
 
+    public int getR1() {
+        return R1;
+    }
+
+    public void setR1(int r1) {
+        R1 = r1;
+    }
+
     private String zh;
     private int time;
     private int yxj;
+    private int R1;
 }

@@ -1,4 +1,4 @@
-package Satelliteoperator;
+package Satelliteoperator.Util;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
