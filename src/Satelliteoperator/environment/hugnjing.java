@@ -1,4 +1,4 @@
-package Satelliteoperator;
+package Satelliteoperator.environment;
 
 import Satelliteoperator.tableclass.TaskInformation;
 
@@ -23,8 +23,9 @@ public class hugnjing {
         taskInformationTable.add(new TaskInformation( "!communicate_soil_data", "e007", "06", 30, 12,10));
         taskInformationTable.add(new TaskInformation( "!communicate_rock_data", "e008", "06", 20, 3,10));
         taskInformationTable.add(new TaskInformation( "!communicate_image_data", "e009", "06", 40, 1,10));
-        taskInformationTable.add(new TaskInformation( "!visit", "e00A", "07", 5, 25,30));
-        taskInformationTable.add(new TaskInformation( "!unvisit", "e00B", "07", 5, 30,10));
+        taskInformationTable.add(new TaskInformation( "!visit", "e00a", "07", 5, 25,30));
+        taskInformationTable.add(new TaskInformation( "!unvisit", "e00b", "07", 5, 30,10));
+        taskInformationTable.add(new TaskInformation( "!unvisit2", "e999", "0", 0, 0,0));
         return  taskInformationTable;
     }
 }

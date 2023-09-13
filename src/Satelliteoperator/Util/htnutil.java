@@ -1,5 +1,7 @@
 package Satelliteoperator.Util;
 
+import Satelliteoperator.tableclass.TaskInformation;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -139,5 +141,15 @@ public class htnutil {
         }  //  System.out.println("未找到匹配");
 
         return "";
+    }
+
+
+    public static TaskInformation search(String TaskLevelName, ArrayList<TaskInformation> taskInformationTable) {
+        for (TaskInformation taskInformation : taskInformationTable) {
+            if (TaskLevelName.equals(taskInformation.getId())) {
+                return taskInformation;
+            }
+        }
+        return new TaskInformation( "!unvisit2", "e999", "0", 0, 0,0);
     }
 }
