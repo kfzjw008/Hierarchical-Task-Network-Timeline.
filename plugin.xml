@@ -62,14 +62,14 @@
       <product
             application="study2.application"
             description="111"
-            name="Main_Application">
+            name="application">
          <property
                name="windowImages"
                value="resources/image/main_c.png,resources/image/main_c.png">
          </property>
          <property
                name="appName"
-               value="Main_Application">
+               value="application">
          </property>
          <property
                name="startupForegroundColor"
@@ -88,12 +88,12 @@
                value="航天器电子数据单管理系统">
          </property>
          <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini">
-         </property>
-         <property
                name="aboutImage"
                value="resources/image/main_c.png">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
          </property>
       </product>
    </extension>

@@ -35,6 +35,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private IWorkbenchWindow window;
 	public ApplicationActionBarAdvisor actionBarAdvisor;
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 	}

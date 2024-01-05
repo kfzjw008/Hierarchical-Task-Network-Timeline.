@@ -18,7 +18,7 @@ public class TestMain {
         while(!cmd.equals("bye")){
             if(cmd.startsWith("do")){
                 String pluginName = cmd.split(" ")[1];
-                manager.service(pluginName);
+                //manager.service(pluginName, null);
             }
             if(cmd.startsWith("load")){
                 String pluginName = cmd.split(" ")[1];
