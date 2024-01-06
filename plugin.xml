@@ -30,22 +30,46 @@
       <view
             category="database"
             class="study2.views.DataBaseView"
-            icon="icons/sample.png"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.png"
             id="study2.views.DataBaseView"
-            name="数据库2">
+            name="数据库">
+      </view>
+            <view
+            category="database"
+            class="study2.views.TelemetryDataView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/submenu.png"
+            id="study2.views.TelemetryDataView"
+            name="遥测数据">
+      </view>
+       <view
+            class="study2.views.NezhaArchitectureConsoleView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/toolbar.png"
+            id="study2.views.NezhaArchitectureConsoleView"
+            name="哪吒架构控制台">
       </view>
       <view
             class="study2.views.LogView"
             id="study2.views.LogView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/info_tsk.png"
             name="日志系统"
             restorable="true">
       </view>
       <view
             class="study2.views.editorView"
             id="study2.views.editorView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/toolbar.png"
             name="插件操作台"
             restorable="true">
       </view>
+            <view
+            class="study2.views.WelcomeView"
+            id="study2.views.WelcomeView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/ovr16/pinned_ovr.png"
+            name="欢迎页"
+            restorable="true">
+      </view>
+      
+      
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

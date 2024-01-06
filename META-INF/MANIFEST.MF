@@ -36,7 +36,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.felix.scr,
  org.eclipse.equinox.event,
  org.eclipse.ui.console;bundle-version="3.11.300",
- org.eclipse.ui.console.source;bundle-version="3.11.300"
+ org.eclipse.ui.console.source;bundle-version="3.11.300",
+ org.eclipse.ui.forms;bundle-version="3.11.400"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: javax.inject,
  org.apache.commons.lang3

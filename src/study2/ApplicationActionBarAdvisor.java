@@ -151,7 +151,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		fileMenu.add(new Separator());
 		fileMenu.add(preferenceAction);
 		fileMenu.add(preferenceAction1);
-		fileMenu.add(testAction3);
+		//fileMenu.add(testAction3);
 		
 		fileMenu.add(new Separator());
 		fileMenu.add(iExitAction);
@@ -193,9 +193,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     // 获取进度监视器，并在状态栏显示		
     statusLine.getProgressMonitor();	
     // 设置状态栏文本		
-    statusItem.setText("中国科学院国家空间科学中心");	
+
+    
+    statusItem.setText("开发:中国科学院国家空间科学中心-张峻巍");	
     //将statusItem注册到statusLine	
     statusLine.add(statusItem);	
+    final StatusLineContributionItem statusItem2 = new StatusLineContributionItem("");	
+    statusItem2.setText("V0.8.30223.56-Beta");	
+    //将statusItem注册到statusLine	
+    statusLine.add(statusItem2);
     }
     
 

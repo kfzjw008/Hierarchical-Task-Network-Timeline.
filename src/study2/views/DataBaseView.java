@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.swt.widgets.TabFolder;
 
 public class DataBaseView extends ViewPart {
     public DataBaseView() {
