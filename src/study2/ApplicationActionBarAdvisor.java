@@ -1,5 +1,6 @@
 package study2;
-
+import study2.actions.NezhaHelpAction;
+import study2.actions.StopNezhaAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -11,13 +12,24 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.actions.OpenInNewWindowAction;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
+import org.eclipse.ui.wizards.newresource.BasicNewFileResourceWizard;
 
+import study2.actions.ConfigNezhaAction;
+import study2.actions.ConnectDatabaseAction;
+import study2.actions.CustomNewFileResourceWizard;
+import study2.actions.DatabaseConfigAction;
 import study2.actions.DeleteAction;
+import study2.actions.ExportDataAction;
+import study2.actions.ModifyTelemetryAction;
+import study2.actions.MoreAction;
 import study2.actions.OpenAction;
+import study2.actions.OpenCustomNewFileWizardAction;
 import study2.actions.OpenPAction;
+import study2.actions.OpenPreferencePageAction;
 import study2.actions.PrefenceAction2;
 import study2.actions.PreferenceAction;
 import study2.actions.SampleAction;
+import study2.actions.StartInternet2;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -49,14 +61,16 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-
+//引入 StartNezhaAction
+import study2.actions.StartNezhaAction;
 /**
  * An action bar advisor is responsible for creating, adding, and disposing of
  * the actions added to a workbench window. Each window will be populated with
  * new actions.
  */
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
-
+	// 定义自定义的操作
+    private OpenCustomNewFileWizardAction openCustomNewFileWizardAction;
 	// Actions - important to allocate these only in makeActions, and then use
 	// them
 	// in the fill methods. This ensures that the actions aren't recreated
@@ -66,6 +80,19 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction iNewWindowAction;
 	private IWorkbenchAction iSaveAction;
 	private SampleAction new1;
+	private Action helpAction; // 您的帮助 Action
+	 private Action nezhaHelpAction;
+	 private OpenPreferencePageAction openPrefsAction;
+	 // 新添加的 Action 声明
+	    private Action configNezhaAction;
+	    private Action modifyTelemetryAction;
+	    private Action moreAction;
+	    private Action connectDatabaseAction;
+	    private Action databaseConfigAction;
+	    private Action exportDataAction;
+	    private Action stopNezhaAction;
+	 private Action startNezhaAction;
+	 private Action startIAction;
 	private Action preferenceAction;
 	private DeleteAction deleteAction;
 	private IWorkbenchAction saveProjectAction;// 保存工程文件
@@ -76,17 +103,50 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction preferenceAction1;
 	private Action openAction;
 	private Action openPAction;
+	 private CustomNewFileResourceWizard customNewFileWizardAction;
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
 	}
 	
 	protected void makeActions(IWorkbenchWindow window) {
+		 // 创建自定义的新建文件向导操作
+        openCustomNewFileWizardAction = new OpenCustomNewFileWizardAction();
+        
+        // 注册自定义的新建文件向导操作
+        register(openCustomNewFileWizardAction);
+        helpAction = new NezhaHelpAction();
+        register(helpAction); // 注册 Action
+		   openPrefsAction = new OpenPreferencePageAction();
+	        register(openPrefsAction);
 		preferenceAction1 = ActionFactory.PREFERENCES.create(window);
 		register(preferenceAction1);
+		 startNezhaAction = new StartNezhaAction(window);
+	        register(startNezhaAction);
+	        startIAction = new StartInternet2(window);
+	        register(startIAction);
+	        configNezhaAction = new ConfigNezhaAction(window);
+	        register(configNezhaAction);
+	        modifyTelemetryAction = new ModifyTelemetryAction(window);
+	        register(modifyTelemetryAction);
+
+	        moreAction = new MoreAction(window);
+	        register(moreAction);
+
+	        connectDatabaseAction = new ConnectDatabaseAction(window);
+	        register(connectDatabaseAction);
+
+	        databaseConfigAction = new DatabaseConfigAction(window);
+	        register(databaseConfigAction);
+
+	        exportDataAction = new ExportDataAction(window);
+	        register(exportDataAction);
 		exitAction = ActionFactory.QUIT.create(window);
 		register(exitAction);
 		aboutAction = ActionFactory.ABOUT.create(window);
 		register(aboutAction);
+
+        stopNezhaAction = new StopNezhaAction(window);
+        register(stopNezhaAction);
 		saveProjectAction = ActionFactory.SAVE.create(window);
 		saveAllAction = ActionFactory.SAVE_ALL.create(window);
 		this.getActionBarConfigurer().registerGlobalAction(saveProjectAction); // ctrl+s，保存工程文件。
@@ -128,60 +188,73 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		trayMenu.add(exitAction);
 		}
 	protected void fillMenuBar(IMenuManager menuBar) {
-		MenuManager fileMenu = new MenuManager("&文件",IWorkbenchActionConstants.M_FILE);
-		MenuManager helpMenu = new MenuManager("&帮助",IWorkbenchActionConstants.M_HELP);
-		MenuManager help2Menu = new MenuManager("&关于",IWorkbenchActionConstants.M_HELP);
-		MenuManager cjMenu = new MenuManager("&插件");
-		MenuManager xjMenu = new MenuManager("&新建");
-		MenuManager sTMenu = new MenuManager("&视图",IWorkbenchActionConstants.M_VIEW);
-		MenuManager bjMenu = new MenuManager("&编辑",IWorkbenchActionConstants.M_EDIT);
-		MenuManager dataMenu = new MenuManager("&数据",IWorkbenchActionConstants.MB_ADDITIONS);
-		menuBar.add(fileMenu);
-		menuBar.add(bjMenu);
-		menuBar.add(cjMenu);
-		menuBar.add(dataMenu);
-		menuBar.add(sTMenu);
-		menuBar.add(helpMenu);
-		menuBar.add(help2Menu);
-		// File Menu
-		xjMenu.add(openAction);
-		fileMenu.add(xjMenu);
-		fileMenu.add(openAction);
-		fileMenu.add(iSaveAction);
-		fileMenu.add(new Separator());
-		fileMenu.add(preferenceAction);
-		fileMenu.add(preferenceAction1);
-		//fileMenu.add(testAction3);
-		
-		fileMenu.add(new Separator());
-		fileMenu.add(iExitAction);
-		
-		cjMenu.add(new1);
-		cjMenu.add(openPAction);
-		
-		
-		
-		
-		
-		// Help Menu
-		help2Menu.add(iAboutAction);
-		
-		bjMenu.add(new1);
-		bjMenu.add(new Separator());
-		bjMenu.add(deleteAction);
-		cjMenu.add(new1);
-		sTMenu.add(new1);
-		helpMenu.add(new1);
-		}
+	    MenuManager fileMenu = new MenuManager("&文件", IWorkbenchActionConstants.M_FILE);
+	    MenuManager helpMenu = new MenuManager("&帮助", IWorkbenchActionConstants.M_HELP);
+	    helpMenu.add(helpAction);
+	    
+	    
+	    MenuManager help2Menu = new MenuManager("&关于", IWorkbenchActionConstants.M_HELP);
+	    MenuManager cjMenu = new MenuManager("&插件");
+	    MenuManager xjMenu = new MenuManager("&新建");
+	    MenuManager nezhaMenu = new MenuManager("&哪吒");
+	    nezhaMenu.add(startIAction);
+	    nezhaMenu.add(new Separator());
+	    nezhaMenu.add(startNezhaAction);
+	    nezhaMenu.add(stopNezhaAction); // 添加关闭哪吒架构
+	    // 新添加的哪吒菜单项
+	    nezhaMenu.add(configNezhaAction); // 架构基本配置
+	    nezhaMenu.add(new Separator());
+	    nezhaMenu.add(modifyTelemetryAction); // 遥测数据修改
+	    nezhaMenu.add(moreAction); // 更多...
+	    MenuManager sTMenu = new MenuManager("&视图", IWorkbenchActionConstants.M_VIEW);
+	    MenuManager bjMenu = new MenuManager("&编辑", IWorkbenchActionConstants.M_EDIT);
+	    MenuManager dataMenu = new MenuManager("&数据", IWorkbenchActionConstants.MB_ADDITIONS);
+	    // 新添加的数据菜单项
+	    dataMenu.add(connectDatabaseAction); // 一键连接数据库
+	    dataMenu.add(databaseConfigAction); // 数据库连接配置
+	    dataMenu.add(exportDataAction); // 数据导出
+	    menuBar.add(fileMenu);
+	    menuBar.add(bjMenu);
+	    menuBar.add(cjMenu);
+	    menuBar.add(nezhaMenu);
+	    menuBar.add(dataMenu);
+	    menuBar.add(sTMenu);
+	    menuBar.add(helpMenu);
+	    menuBar.add(help2Menu);
+	    // File Menu
+	    xjMenu.add(openAction);
+	    //fileMenu.add(xjMenu);
+	     // 添加自定义的新建文件向导操作到 "文件" 菜单
+        fileMenu.add(openCustomNewFileWizardAction);
+	    fileMenu.add(openAction);
+	    fileMenu.add(iSaveAction);
+	    fileMenu.add(new Separator());
+	    fileMenu.add(openPrefsAction);
+	    //fileMenu.add(testAction3);
+	    fileMenu.add(new Separator());
+	    fileMenu.add(iExitAction);
 	
+	    cjMenu.add(openPAction);
+	    // Help Menu
+	    help2Menu.add(iAboutAction);
+	    bjMenu.add(new1);
+	    bjMenu.add(new Separator());
+	    bjMenu.add(deleteAction);
+
+	    sTMenu.add(new1);
+	}
+
 	@Override
 	protected void fillCoolBar(ICoolBarManager coolBar) {
 		// This will add a new toolbar
 		IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT); 
 		coolBar.add(new ToolBarContributionItem(toolbar, "main"));
 		// Add the entry to the
+		toolbar.add(openCustomNewFileWizardAction);
 		toolbar.add(openAction);
 		toolbar.add(iSaveAction);
+	     // 添加自定义的新建文件向导操作到 "文件" 菜单
+
 	
 		
 	}

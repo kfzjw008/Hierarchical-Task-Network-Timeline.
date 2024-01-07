@@ -12,6 +12,14 @@
       </application>
    </extension>
    <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           class="study2.page.PreferencePage"
+           id="study2.page.referencePage"
+           name="全局设置">
+     </page>
+</extension>
+   <extension
          point="org.eclipse.ui.perspectives">
       <perspective
             class="study2.perspective"
@@ -77,9 +85,17 @@
             targetID="study2.perspective">
       </perspectiveExtension>
    </extension>
+
+
+<extension point="org.eclipse.help.contexts">
+   <contexts
+         file="study2.contexts1">
+   </contexts>
+</extension>
    <extension
          point="org.eclipse.ui.actionSets">
    </extension>
+   
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
@@ -121,13 +137,33 @@
          </property>
       </product>
    </extension>
+<extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="study2.commands.nezhaHelp"
+            name="哪吒架构帮助"
+            description="显示帮助内容">
+      </command>
+</extension>
+
+   <extension
+        point="org.eclipse.ui.handlers">
+    <handler
+            commandId="study2.commands.nezhaHelp"
+            class="study2.actions.NezhaHelpAction">
+    </handler>
+</extension>
+   <extension point="org.eclipse.ui.commands">
+    <command
+        id="study2.commands.help"
+        name="Help"
+        description="Show help content">
+    </command>
+</extension>
    <extension
          point="org.eclipse.help.contexts">
       <contexts
-            file="contexts.xml">
-      </contexts>
-      <contexts
-            file="contexts.xml">
+            file="help/contexts.xml">
       </contexts>
    </extension>
    <extension
@@ -154,20 +190,8 @@
          </action>
       </viewContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="study2.preferences.SamplePreferencePage"
-            id="study2.preferences.SamplePreferencePage"
-            name="全局设置">
-      </page>
-   </extension>
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="study2.preferences.PreferenceInitializer">
-      </initializer>
-   </extension>
+
+
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -176,6 +200,30 @@
             id="study2.views.editorcontent"
             name="内容编辑器">
       </editor>
+   </extension>
+   
+   <extension point="org.eclipse.help.toc">
+    <toc file="help/toc.xml" primary="true"/>
+</extension>
+   <extension
+         point="org.eclipse.ui.helpSupport">
+      <config
+            class="study2.views.AbstractHelpUI2">
+      </config>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="study2"
+            name="SEMS-Files">
+      </category>
+      <wizard
+            category="study2"
+            class="study2.wizards.SampleNewWizard"
+            icon="icons/sample.png"
+            id="study2.wizards.SampleNewWizard"
+            name="XML">
+      </wizard>
    </extension>
 
 </plugin>

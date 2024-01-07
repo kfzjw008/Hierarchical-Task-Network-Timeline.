@@ -155,7 +155,19 @@ public class editorView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		  // 确保父容器设置了 GridLayout
+	    GridLayout layout = new GridLayout(1, false); // 1 列
+	    layout.verticalSpacing = 10; // 设置控件之间的垂直间距
+	    parent.setLayout(layout);
 
+	    // 创建初始显示的几行字
+	    Label defaultText = new Label(parent, SWT.NONE);
+	    defaultText.setText("    提示：当前插件为空。请点击‘插件’->‘添加插件…’来加入相关的插件。");
+
+	    // 设置布局数据来调整垂直位置
+	    GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+	    gridData.verticalIndent = 100; // 调整这个值以改变文本的垂直位置
+	    defaultText.setLayoutData(gridData);
 		aString = VariableUtil.jsonstring;
 		VariableUtil.b.setString(aString);
 		Map mapTypess = JSON.parseObject(aString);
@@ -166,6 +178,8 @@ public class editorView extends ViewPart {
 			}
 			mapTypes = mapTypess;
 			VariableUtil.Map = mapTypes;
+			  // 在创建视图内容之前，清除初始文本
+	        defaultText.dispose(); // 清除默认显示的几行字
 			createview(parent, VariableUtil.Map);
 		}
 
@@ -180,10 +194,13 @@ public class editorView extends ViewPart {
 				mapTypes = mapTypess;
 
 				VariableUtil.Map = mapTypes;
-				resetview(parent);
+		         // 同样，在更新视图之前，清除初始文本
+	            defaultText.dispose();
+	            resetview(parent);
 			}
 		});
-
+	    // 请求更新和重新布局父容器
+	    parent.layout();
 	}
 
 	public void resetview(Composite parent) {

@@ -1,8 +1,11 @@
 package study2;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import study2.utils.PreferenceConstants;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -26,9 +29,14 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
+	    super.start(context);
+	    System.out.println("Activator start method called."); // 日志输出或断点
+	    plugin = this;
+	    IPreferenceStore store = getPreferenceStore();
+	    store.setDefault(PreferenceConstants.P_IP_ADDRESS, "192.168.137.1");
+	    store.setDefault(PreferenceConstants.P_PORT, 80);
 	}
+
 
 	/*
 	 * (non-Javadoc)

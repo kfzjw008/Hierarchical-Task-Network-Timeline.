@@ -63,7 +63,7 @@ public class OpenPAction extends Action {
 				
 				manager.view(VariableUtil.CurrentPuluinName.split("\\.")[0]);
 				
-				System.out.println("插件插入完成！！");
+				System.out.println("[LOG]插件插入完成。");
 
 				// XXX
 				

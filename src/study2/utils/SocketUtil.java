@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class SocketUtil {
@@ -34,6 +35,37 @@ public class SocketUtil {
                 stringBuilder.append(line);
             }
             return stringBuilder.toString();
+        }
+    }
+    
+    /**
+     * 检查给定的IP地址和端口号的网络连接是否通畅。
+     * 
+     * @param ipAddress IP地址，如 "1.1.1.1"
+     * @param port 端口号
+     * @return 如果网络通畅返回1，否则返回0
+     */
+    public static int checkConnectivity(String ipAddress, int port) {
+        try (Socket socket = new Socket()) {
+            // 设置连接超时时间为5秒
+            int timeout = 5000; 
+            socket.connect(new InetSocketAddress(ipAddress, port), timeout);
+            // 如果代码执行到这里，说明连接成功
+            return 1;
+        } catch (IOException e) {
+            // 发生异常，说明连接失败
+            return 0;
+        }
+    }
+    
+    public static void main(String[] args) {
+        String ip = "192.168.17.1"; // 请替换为实际的IP地址
+        int port = 80; // 请替换为实际的端口号
+        int result = checkConnectivity(ip, port);
+        if (result == 1) {
+            System.out.println("网络连接通畅");
+        } else {
+            System.out.println("无法连接到指定的网络地址");
         }
     }
 }
