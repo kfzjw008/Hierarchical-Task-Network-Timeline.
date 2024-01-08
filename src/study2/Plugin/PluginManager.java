@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Factory.ToolServiceFactory;
-import study2.Plugin.PluginClassLoader;
+import Factory.ToolServiceFactoryImpl;
 import study2.utils.VariableUtil;
 
 public class PluginManager {
