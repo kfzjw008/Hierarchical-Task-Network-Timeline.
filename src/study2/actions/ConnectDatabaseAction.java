@@ -2,7 +2,9 @@ package study2.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 public class ConnectDatabaseAction extends Action {
 
@@ -12,6 +14,8 @@ public class ConnectDatabaseAction extends Action {
         this.window = window;
         setText("一键连接数据库");
         setId("study2.ConnectDatabaseAction");
+        setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_DEF_VIEW));
+        
     }
 
     @Override

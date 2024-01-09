@@ -31,6 +31,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.ISaveablePart2;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.swt.custom.ScrolledComposite;
 
 public class editorcontent extends EditorPart implements ISaveablePart2 {
 	public static final String ID = "study2.views.editorcontent";
@@ -50,16 +51,24 @@ public class editorcontent extends EditorPart implements ISaveablePart2 {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		text = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.CANCEL | SWT.MULTI);
-		loadText();
-		text.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				dirty = true;
-				firePropertyChange(ISaveablePart2.PROP_DIRTY);
-			}
-		});
-	}
+	     ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER| SWT.V_SCROLL | SWT.H_SCROLL);
+	        scrolledComposite.setExpandHorizontal(true);
+	        scrolledComposite.setExpandVertical(true);
+	     // 创建 Text 控件，确保包含 SWT.MULTI 和滚动条样式
+	        text = new Text(scrolledComposite, SWT.BORDER | SWT.WRAP | SWT.MULTI );
+	        scrolledComposite.setContent(text);
+	       // 更新 ScrolledComposite 的最小尺寸
+	        text.addModifyListener(new ModifyListener() {
+	            @Override
+	            public void modifyText(ModifyEvent e) {
+	                dirty = true;
+	                firePropertyChange(ISaveablePart2.PROP_DIRTY);
+	                scrolledComposite.setMinSize(text.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	            }
+	        });
+	        loadText();
+	    }
+
 
 	/*
 	 * (non-Javadoc )

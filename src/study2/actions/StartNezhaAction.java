@@ -4,6 +4,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -21,6 +22,8 @@ public class StartNezhaAction extends Action {
         this.window = window;
         setText("一键启动哪吒架构");
         setId("study2.actions.StartNezhaAction"); // 设置唯一的 ID
+        setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_FORWARD));
+        
         // 设置 Action 的其他属性，如图标等
         // setImageDescriptor(...);
     }

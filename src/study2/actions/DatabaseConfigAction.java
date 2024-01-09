@@ -1,7 +1,9 @@
 package study2.actions;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 public class DatabaseConfigAction extends Action {
 
@@ -11,6 +13,8 @@ public class DatabaseConfigAction extends Action {
         this.window = window;
         setText("数据库连接配置…");
         setId("study2.DatabaseConfigAction");
+        setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_TASK_TSK));
+        
     }
 
     @Override

@@ -20,7 +20,7 @@ public class LogView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         styledText = new StyledText(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.READ_ONLY);
-        // redirectSystemOutput();
+         redirectSystemOutput();
 //(调试完成后打开)
         // 使用 System.out.println 输出文本
         System.out.println("[INFO]SEMS已经正常启动！");
@@ -57,7 +57,7 @@ public class LogView extends ViewPart {
         if (!styledText.isDisposed()) {
             styledText.getDisplay().asyncExec(() -> {
                 if (text.startsWith("[INFO]") || text.startsWith("[WARN]") || 
-                    text.startsWith("[ERR]") || text.startsWith("[LOG]")) {
+                    text.startsWith("[ERR]") || text.startsWith("[LOG]")|| text.startsWith("[PLUGIN]")) {
                     applyTextWithColor(text);
                 }
             });
@@ -83,6 +83,8 @@ public class LogView extends ViewPart {
             styleRange.foreground = styledText.getDisplay().getSystemColor(SWT.COLOR_RED);
         } else if (text.startsWith("[LOG]")) {
             styleRange.foreground = styledText.getDisplay().getSystemColor(SWT.COLOR_BLUE);
+        }else if (text.startsWith("[PLUGIN]")) {
+            styleRange.foreground = styledText.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN);
         }
 
         styledText.setStyleRange(styleRange);

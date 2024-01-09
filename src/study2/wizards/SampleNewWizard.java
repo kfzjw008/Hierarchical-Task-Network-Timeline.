@@ -94,8 +94,47 @@ public class SampleNewWizard extends Wizard implements INewWizard {
 	    try {
 	        if (!file.exists()) {
 	            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-	                String contents = "This is the initial file contents for *.mpe file that should be word-sorted in the Preview page of the multi-page editor";
-	                writer.write(contents);
+	                if (fileName.endsWith(".java")) {
+		                // 执行针对 .java 文件的特定操作
+	                     String contents = "package p1.service;\n"
+	                     		+ "\n"
+	                     		+ "import java.io.IOException;\n"
+	                     		+ "import java.util.ArrayList;\n"
+	                     		+ "import java.util.List;\n"
+	                     		+ "\n"
+	                     		+ "import Factory.ToolServiceFactory;\n"
+	                     		+ "import Factory.ToolServiceFactoryImpl;\n"
+	                     		+ "\n"
+	                     		+ "public class ****** extends ToolServiceFactory implements ToolServiceFactoryImpl {\n"
+	                     		+ "\n"
+	                     		+ "	public ******() throws IOException {\n"
+	                     		+ "		\n"
+	                     		+ "		super(\"******\", \"******\");\n"
+	                     		+ "		\n"
+	                     		+ "		// TODO Auto-generated constructor stub\n"
+	                     		+ "	}\n"
+	                     		+ "	private String outputtype=\"******\";\n"
+	                     		+ "	private String name=\"******\";\n"
+	                     		+ "	private String description=\"******\";\n"
+	                     		+ "	private String author=\"******\";\n"
+	                     		+ "	private String date=\"2024-**-**\";\n"
+	                     		+ "	private String ToolName=\"****** \";\n"
+	                     		+ "	private String Category=\"******\";\n"
+	                     		+ "\n"
+	                     		+ "	public List<String> service(ArrayList  list){\n"
+	                     		+ "		// TODO 此处为service的实现类,在此处输入代码\n"
+	                     		+ "	return resuList;\n"
+	                     		+ "	\n"
+	                     		+ "}\n"
+	                     		+ "	public String V() {\n"
+	                     		+ "		return \"SUCCESS\";\n"
+	                     		+ "	}\n"
+	                     		+ "}\n"
+	                     		+ "";
+	  	               writer.write(contents);
+		            }
+	               // String contents = "This is the initial file contents for *.mpe file that should be word-sorted in the Preview page of the multi-page editor";
+	              //  writer.write(contents);
 	            }
 	        } else {
 	            throw new CoreException(new Status(IStatus.ERROR, "study2", "File \"" + file.getAbsolutePath() + "\" already exists."));
@@ -111,6 +150,8 @@ public class SampleNewWizard extends Wizard implements INewWizard {
 	        try {
 	            // 创建一个 FileInput 来表示新创建的文件
 	            FileInput input = new FileInput(file.getAbsolutePath());
+	            // 检查文件后缀名是否为 .java
+	      
 	            // 使用特定的编辑器 ID 打开新文件
 	            page.openEditor(input, "study2.views.editorcontent");
 	        } catch (PartInitException e) {

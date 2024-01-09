@@ -24,6 +24,7 @@ public class perspective implements IPerspectiveFactory {
 	IFolderLayout leftTopFolder = layout.createFolder("LEFT", IPageLayout.LEFT, 0.18f, editorArea);
 		leftTopFolder.addView("study2.views.DataBaseView");//study2.views.DataBaseView
 		leftTopFolder.addView("study2.views.TelemetryDataView");//study2.views.DataBaseView
+		leftTopFolder.addView("study2.views.FileListView");//study2.views.DataBaseView
 		//leftTopFolder.addView("study2.view");
 		IFolderLayout leftBOTTOMFolder = layout.createFolder("BOTTOM", IPageLayout.BOTTOM, 0.8f, editorArea);
 		leftBOTTOMFolder.addView("study2.views.LogView");

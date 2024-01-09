@@ -15,6 +15,8 @@ import org.eclipse.ui.part.ViewPart;
 import study2.utils.SocketUtil;
 
 public class NezhaArchitectureConsoleView extends ViewPart {
+	public NezhaArchitectureConsoleView() {
+	}
 	   private SocketUtil socketUtil; // 套接字工具类成员变量
     private Text textArea;
     private Tree commandTree;
@@ -25,6 +27,8 @@ public class NezhaArchitectureConsoleView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
+   
+
     	 statusIndicators = new Canvas[6]; 
         this.parentComposite = parent;
     	 parent.setLayout(new GridLayout(1, false)); // One column layout for the main parent

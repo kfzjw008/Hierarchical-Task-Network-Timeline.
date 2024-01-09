@@ -5,6 +5,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -23,6 +24,9 @@ public class StartInternet2 extends Action {
         setText("检查/更新架构以太网链路…");
         setAccelerator(SWT.CTRL | 'E');
         setId("study2.actions.StartNezhaAction"); // 设置唯一的 ID
+        setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_ELCL_SYNCED));
+        
+		
         // 设置 Action 的其他属性，如图标等
         // setImageDescriptor(...);
     }

@@ -4,9 +4,11 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import study2.Activator;
 import study2.utils.FileInput;
@@ -24,7 +26,10 @@ public class OpenAction extends Action {
 		this.window = window;
 		setText("&打开…");
 		setId(ID);
-		setImageDescriptor(Activator.getImageDescriptor("/icons/newfile_wiz.gif"));
+		 // 设置动作的图标
+	    setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
+  
+		
 	}
 
 	@Override

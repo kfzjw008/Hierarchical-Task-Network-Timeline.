@@ -36,6 +36,13 @@
             name="Data Category">
       </category>
       <view
+            class="study2.views.FileListView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.png"
+            id="study2.views.FileListView"
+            name="插件列表"
+            restorable="true">
+      </view>
+      <view
             category="database"
             class="study2.views.DataBaseView"
             icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.png"

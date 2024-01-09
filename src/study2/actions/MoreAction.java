@@ -2,7 +2,9 @@ package study2.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 public class MoreAction extends Action {
 
@@ -12,6 +14,8 @@ public class MoreAction extends Action {
         this.window = window;
         setText("更多...");
         setId("study2.MoreAction");
+        setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_FORWARD));
+        
     }
 
     @Override
