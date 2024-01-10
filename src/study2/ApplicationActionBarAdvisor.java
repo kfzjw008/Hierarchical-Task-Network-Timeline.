@@ -28,6 +28,7 @@ import study2.actions.OpenPAction;
 import study2.actions.OpenPreferencePageAction;
 import study2.actions.PrefenceAction2;
 import study2.actions.PreferenceAction;
+import study2.actions.RefreshDatabaseAction;
 import study2.actions.SampleAction;
 import study2.actions.StartInternet2;
 
@@ -79,6 +80,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction iAboutAction;
 	private IWorkbenchAction iNewWindowAction;
 	private IWorkbenchAction iSaveAction;
+	 private RefreshDatabaseAction refreshAction;
 	private SampleAction new1;
 	private Action helpAction; // 您的帮助 Action
 	 private Action nezhaHelpAction;
@@ -103,12 +105,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction preferenceAction1;
 	private Action openAction;
 	private Action openPAction;
+	  private RefreshDatabaseAction refreshDatabaseAction;
 	 private CustomNewFileResourceWizard customNewFileWizardAction;
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
 	}
 	
 	protected void makeActions(IWorkbenchWindow window) {
+		 refreshDatabaseAction = new RefreshDatabaseAction(window);
+	        register(refreshDatabaseAction);
 		 // 创建自定义的新建文件向导操作
         openCustomNewFileWizardAction = new OpenCustomNewFileWizardAction();
         
@@ -211,6 +216,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	    MenuManager dataMenu = new MenuManager("&数据", IWorkbenchActionConstants.MB_ADDITIONS);
 	    // 新添加的数据菜单项
 	    dataMenu.add(connectDatabaseAction); // 一键连接数据库
+	    dataMenu.add(refreshDatabaseAction);
 	    dataMenu.add(databaseConfigAction); // 数据库连接配置
 	    dataMenu.add(exportDataAction); // 数据导出
 	    menuBar.add(fileMenu);

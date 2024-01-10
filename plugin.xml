@@ -30,6 +30,21 @@
       </perspective>
    </extension>
    <extension
+     point="org.eclipse.ui.commands">
+  <command
+        id="study2.commands.refreshDatabase"
+        name="刷新数据库"
+        description="刷新数据库视图">
+  </command>
+</extension>
+   <extension
+     point="org.eclipse.ui.handlers">
+  <handler
+        commandId="study2.commands.refreshDatabase"
+        class="study2.handlers.RefreshDatabaseHandler">
+  </handler>
+</extension>
+   <extension
          point="org.eclipse.ui.views">
       <category
             id="database"

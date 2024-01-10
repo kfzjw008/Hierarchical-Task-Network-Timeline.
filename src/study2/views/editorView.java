@@ -2,6 +2,9 @@ package study2.views;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -19,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.FocusEvent;
@@ -45,7 +49,7 @@ public class editorView extends ViewPart {
 	private Text text_1;
 	public Map<String, Object> mapTypes;
 	public String aString;
-
+	private List<Control> inputControls = new ArrayList<>(); // 存储所有输入控件的引用
 	public editorView() {
 		// TODO Auto-generated constructor stub
 	}
@@ -238,20 +242,28 @@ public class editorView extends ViewPart {
 	    }
 
 	    private void createControl(Composite parent, Map<String, Object> element) {
-	    	
+	    	 String content ="";
 	        String type = (String) element.get("type");
 	        String label = (String) element.get("label");
+	        if(type.equals("Inputtext")) {
+	           content = (String) element.get("content");
+	        }
+	   
 	        String description = (String) element.get("description");
 	        // 创建一个新的Composite来作为一行
 	        Composite controlComposite = new Composite(parent, SWT.NONE);
 	        controlComposite.setLayout(new GridLayout(2, false)); // 两列布局
-	        controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+	        //controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+	     
 	        // 创建标签并设置ToolTip作为描述
 	        Label labelControl = new Label(controlComposite, SWT.NONE);
 	        labelControl.setText(label);
 	        labelControl.setFont(SWTResourceManager.getFont("Microsoft YaHei UI", 9, SWT.BOLD)); // 设置标签为加粗字体
 	        labelControl.setToolTipText(description);
-	        labelControl.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+	        GridData labelGridData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+	        labelGridData.horizontalAlignment = GridData.END;
+	        labelGridData.widthHint = 100; // 您可以根据需要调整这个值
+	        labelControl.setLayoutData(labelGridData);
 	        
 	        
 
@@ -262,7 +274,7 @@ public class editorView extends ViewPart {
                 createOptionsControl(parent, element, type);
                 break;
             case "Inputtext":
-                createTextInput(parent, label);
+                createTextInput(parent, label,content);
                 break;
             case "List":
                 createDropDown(parent, element);
@@ -290,11 +302,12 @@ public class editorView extends ViewPart {
 	    	    for (String option : options) {
 	    	        Button button = new Button(buttonsComposite, type.equals("Checkbox") ? SWT.CHECK : SWT.RADIO);
 	    	        button.setText(option);
+	    	        inputControls.add(button); // 将文本输入框添加到列表中
 	    	        // 设置按钮的布局数据（如果需要的话）
 	    	    }
 	    }
 
-	    private void createTextInput(Composite parent, String label) {
+	    private void createTextInput(Composite parent, String label,String content) {
 	    	   // 创建一个新的Composite来放置单选按钮或复选框组，以便它们能在同一行内排列
 	        Composite buttonsComposite = new Composite(parent, SWT.NONE);
 	        RowLayout rowLayout = new RowLayout(SWT.HORIZONTAL); // 使用RowLayout以水平排列控件
@@ -305,6 +318,8 @@ public class editorView extends ViewPart {
 	        // 创建文本输入框
 	       // new Label(parent, SWT.NONE).setText(label);
 	        Text text = new Text(buttonsComposite, SWT.BORDER);
+	        text.setText(content);
+	        inputControls.add(text); // 将文本输入框添加到列表中
 	      //  text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 	    }
 
@@ -315,6 +330,7 @@ public class editorView extends ViewPart {
 	        List<String> items = (List<String>) element.get("content");
 	        combo.setItems(items.toArray(new String[0]));
 	        combo.select(0); // 选择第一项
+	        inputControls.add(combo); // 将文本输入框添加到列表中
 	    }
 
 	    private void createSlider(Composite parent, Map<String, Object> element) {
@@ -325,6 +341,7 @@ public class editorView extends ViewPart {
 	        slider.setMinimum(range.get(0));
 	        slider.setMaximum(range.get(1) + slider.getThumb());
 	        slider.setSelection((Integer) element.get("content"));
+	        inputControls.add(slider); // 将文本输入框添加到列表中
 	    }
 
 	    private void createSubmitButton(Composite parent) {
@@ -332,8 +349,79 @@ public class editorView extends ViewPart {
 	        Button btnNewButton = new Button(parent, SWT.NONE);
 	        btnNewButton.setText("Submit");
 	        // 按钮事件监听略...
+	        
+	        
+	        btnNewButton.addSelectionListener(new SelectionAdapter() {
+	            public void widgetSelected(SelectionEvent event) {
+	              //  Map<String, Object> values = new HashMap<>(); // 用于存储所有控件的值
+	                ArrayList<String> values=new ArrayList<>(); 
+	    			
+	                System.out.println("[DEBUG] inputControls size: " + inputControls.size());
+	                for (Control control : inputControls) {
+	                	// System.out.println(control.get);
+	                	
+	                	 System.out.println("[DEBUG] Control: " + control.getClass().getSimpleName());
+	                    if (control instanceof Text) {
+	                        Text text = (Text) control;
+	                        values.add(text.getText());
+	                        System.out.println("[INFO] Text元素：" + text.getText());
+	                    } else if (control instanceof Button) {
+	                        Button button = (Button) control;
+	                        if ((button.getStyle() & SWT.CHECK) != 0 || (button.getStyle() & SWT.RADIO) != 0) {
+	                            boolean selected = button.getSelection();
+	                            values.add(String.valueOf(selected));
+	                            System.out.println("[INFO] Button元素：" + button.getText() + " 选中状态：" + selected);
+	                        }
+	                    } else if (control instanceof Combo) {
+	                        Combo combo = (Combo) control;
+	                        String selected = combo.getText();
+	                        values.add(selected);
+	                        System.out.println("[INFO] Combo元素：" + selected);
+	                    } else if (control instanceof Slider) {
+	                        Slider slider = (Slider) control;
+	                        int value = slider.getSelection();
+	                        values.add(String.valueOf(value));
+	                        System.out.println("[INFO] Slider元素值：" + value);
+	                    }
+	                    // ... 检查并获取其他类型控件的值 ...
+	                }
+	                
+	                // 调用service函数并传递values
+	                PluginManager manager = new PluginManager();
+					File directory = new File("");
+					System.out.println(directory.getAbsolutePath());
+					VariableUtil.CurrentPuluinPath = directory.getAbsolutePath() +"/Plugin/"+ VariableUtil.CurrentPuluinName;// 修改当前路径，可以读取新路径
+					manager.loadPlugin(VariableUtil.CurrentPuluinName.split("\\.")[0]);
+					//manager.service(VariableUtil.CurrentPuluinName.split("\\.")[0], kArrayList);
+	                // ... 加载插件并调用service函数 ...
+	                manager.service(VariableUtil.CurrentPuluinName.split("\\.")[0], values);
+	                //tableViewer.setInput(newInput); // 设置新的输入数据
+	                //tableViewer.refresh(); // 刷新视图以显示新的输入
+	                callRefreshOnDataBaseView() ;
+	                MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "提示信息", "提示(T0002):数据提交完成！！！");
+	            }
+	        });
+	        
+	        
 	    }
 	  
+	    
+	    private void callRefreshOnDataBaseView() {
+	        // 获取当前的工作台页面
+	        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	        // 尝试找到数据库视图的实例
+	        for (IViewReference viewRef : page.getViewReferences()) {
+	            if (DataBaseView.ID.equals(viewRef.getId())) {
+	                DataBaseView dataBaseView = (DataBaseView) viewRef.getView(false);
+	                if (dataBaseView != null) {
+	                    // 调用数据库视图的刷新方法
+	                    dataBaseView.refreshAllTableViews();
+	                }
+	                break;
+	            }
+	        }
+	    }
+	    
 	@Override
 	public void createPartControl(Composite parent) {
 		   // 创建ScrolledComposite
@@ -426,8 +514,10 @@ public class editorView extends ViewPart {
 		// 填充新内容
 		// ******************
 		Map<String, Object> map = VariableUtil.Map;// VariableUtil.Map;
+		inputControls.clear();
 		createview2(parent, map);
 		// 执行刷新操作
+	
 		parent.requestLayout();
 
 	}

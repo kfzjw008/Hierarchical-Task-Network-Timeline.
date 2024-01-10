@@ -20,7 +20,7 @@ public class LogView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         styledText = new StyledText(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.READ_ONLY);
-         redirectSystemOutput();
+      //  redirectSystemOutput();
 //(调试完成后打开)
         // 使用 System.out.println 输出文本
         System.out.println("[INFO]SEMS已经正常启动！");

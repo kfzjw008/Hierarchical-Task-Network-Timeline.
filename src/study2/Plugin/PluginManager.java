@@ -54,6 +54,7 @@ public class PluginManager {
             LocalDateTime now = LocalDateTime.now();
             System.out.println("Current local time: " + now);
             System.out.println("[PLUGIN]"+now+" "+ins.service(valueList));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

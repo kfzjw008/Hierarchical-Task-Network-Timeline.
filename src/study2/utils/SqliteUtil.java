@@ -23,6 +23,32 @@ public class SqliteUtil {
 	private static final String CLASS_NAME = "org.sqlite.JDBC";
 	//private static final String DB_URL_PREFIX = "jdbc:sqlite:"+directory.getCanonicalPath();+"/datas/";
 
+	
+	
+	
+
+    /**
+     * 从指定数据库表中删除一行。
+     *
+     * @param dbname    数据库名称
+     * @param tableName 表名称
+     * @param id        要删除的行的ID
+     * @return 删除成功返回1，否则返回0
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws IOException
+     */
+    public static int deleteRow(String dbname, String tableName, Object id)
+            throws ClassNotFoundException, SQLException, IOException {
+        String sql = "DELETE FROM " + tableName + " WHERE id = ?;";
+        return execute(dbname, sql, new Object[]{id}, 0);
+    }
+	
+	
+	
+	
+	
+	
 	/**
 	 * 获取数据库连接
 	 * 
@@ -49,6 +75,32 @@ public class SqliteUtil {
 		} //得到的是C:/test 
 		return DriverManager.getConnection( "jdbc:sqlite:"+directory.getCanonicalPath()+"/datas/" + dbname);
 	}
+	
+	
+	/**
+     * 获取数据库中的所有表名。
+     *
+     * @param dbname 数据库名称。
+     * @return 表名的列表。
+     */
+	
+
+	
+    public List<String> getTableNames(String dbname) throws SQLException, ClassNotFoundException, IOException {
+        List<String> tableNames = new ArrayList<>();
+        String sql = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';";
+        
+        try (Connection conn = getConnection(dbname);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String tableName = rs.getString("name");
+                tableNames.add(tableName);
+            }
+        }
+        return tableNames;
+    }
 
 	/**
 	 * 获取一个数据连接声明
@@ -457,5 +509,8 @@ public class SqliteUtil {
 		}
 		return list;
 	}
+
+
+
 }
 

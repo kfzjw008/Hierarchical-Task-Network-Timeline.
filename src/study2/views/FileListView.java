@@ -270,11 +270,7 @@ class OpenActionSupport extends EditingSupport {
             
             
             // 如果您想要弹出一个对话框
-            MessageDialog.openInformation(
-                getViewer().getControl().getShell(),
-                "操作",
-                "测试成功"
-            );
+          
         }
     }
 }

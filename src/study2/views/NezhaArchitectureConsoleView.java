@@ -72,7 +72,7 @@ public class NezhaArchitectureConsoleView extends ViewPart {
          // Create buttons in the button bar
          for (int i = 1; i <= 8; i++) {
              Button button = new Button(buttonBarComposite, SWT.PUSH);
-             button.setText("Button " + i);
+             button.setText("事件表 " + i);
              GridData buttonGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
              button.setLayoutData(buttonGridData);
          }
@@ -82,7 +82,7 @@ public class NezhaArchitectureConsoleView extends ViewPart {
          inputComposite.setLayout(new GridLayout(2, false));
          inputComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-         textArea = new Text(inputComposite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+         textArea = new Text(inputComposite, SWT.BORDER| SWT.WRAP  | SWT.MULTI | SWT.V_SCROLL);
          GridData textAreaData = new GridData(SWT.FILL, SWT.CENTER, true, false);
          textAreaData.heightHint = 50; // 50 pixels high
          textArea.setLayoutData(textAreaData);
@@ -128,7 +128,7 @@ public class NezhaArchitectureConsoleView extends ViewPart {
         // Add some example data to the table
         for (int i = 0; i < 4; i++) {
             TableItem item = new TableItem(table, SWT.NONE);
-            item.setText(new String[] { "Item " + (i + 1), String.valueOf(i * 10) });
+            item.setText(new String[] { "遥测参数 " + (i + 1), String.valueOf(i * 10) });
         }
 
         // Adjust column width
@@ -203,27 +203,27 @@ public class NezhaArchitectureConsoleView extends ViewPart {
 
     private void populateTree(Tree tree) {
         TreeItem item1 = new TreeItem(tree, SWT.NONE);
-        item1.setText("Command 1");
+        item1.setText("宏指令 1");
         item1.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
         item1.setData("aaa");
         TreeItem item2 = new TreeItem(tree, SWT.NONE);
-        item2.setText("Command 2");
+        item2.setText("宏指令 2");
         item2.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
         item2.setData("bbb");
         TreeItem item3 = new TreeItem(tree, SWT.NONE);
-        item3.setText("Command 3");
+        item3.setText("宏指令 3");
         item3.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
         item3.setData("ccc");
         TreeItem item4 = new TreeItem(tree, SWT.NONE);
-        item4.setText("Command 4");
+        item4.setText("宏指令 4");
         item4.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
         item4.setData("ddd");
         TreeItem item5 = new TreeItem(tree, SWT.NONE);
-        item5.setText("Command 5");
+        item5.setText("宏指令 5");
         item5.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
         item5.setData("eee");
         TreeItem item6 = new TreeItem(tree, SWT.NONE);
-        item6.setText("Command 6");
+        item6.setText("宏指令 6");
         item6.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
         item6.setData("fff");
         // Add more items as needed...
