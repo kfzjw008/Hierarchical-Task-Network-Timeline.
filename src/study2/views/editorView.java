@@ -38,6 +38,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 
 import com.alibaba.fastjson2.JSON;
 
@@ -318,6 +320,13 @@ public class editorView extends ViewPart {
 	        // 创建文本输入框
 	       // new Label(parent, SWT.NONE).setText(label);
 	        Text text = new Text(buttonsComposite, SWT.BORDER);
+	        GC gc = new GC(text);
+	        Point size = gc.textExtent("W"); // 使用一个典型宽度的字符，例如 'W'
+	        gc.dispose();
+
+	        int charWidth = size.x;
+	        int totalWidth = charWidth * 20; // 20个字符的宽度
+	        text.setSize(totalWidth, SWT.DEFAULT);
 	        text.setText(content);
 	        inputControls.add(text); // 将文本输入框添加到列表中
 	      //  text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
