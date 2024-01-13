@@ -13,4 +13,5 @@ public class VariableUtil {
 	public static String CurrentPuluinPath;//当前插件存储位置
 	public static String jsonstring;//当前view的map数据
 	public static  MyBoundBean b = new MyBoundBean();
+	public static String hexOutputs="65a26a67abcd1234000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 }

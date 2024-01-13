@@ -12,6 +12,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import study2.utils.PreferenceConstants;
 import study2.utils.SocketUtil;
 
 public class NezhaArchitectureConsoleView extends ViewPart {
@@ -33,7 +34,7 @@ public class NezhaArchitectureConsoleView extends ViewPart {
         this.parentComposite = parent;
     	 parent.setLayout(new GridLayout(1, false)); // One column layout for the main parent
     	 // 初始化SocketUtil实例
-         socketUtil = new SocketUtil("1.1.1.1", 80); // 替换为实际的服务器地址和端口号
+         socketUtil = new SocketUtil(PreferenceConstants.P_IP_ADDRESS,  Integer.parseInt(PreferenceConstants.P_PORT)); // 替换为实际的服务器地址和端口号
          // Status indicators at the top, adjusted to 2 rows of 4 columns
          Composite statusComposite = new Composite(parent, SWT.NONE);
          // 初始化statusLabels数组

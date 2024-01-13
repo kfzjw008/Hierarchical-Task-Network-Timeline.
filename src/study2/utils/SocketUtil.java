@@ -19,6 +19,8 @@ public class SocketUtil {
     }
 
     public void sendString(String message) throws IOException {
+    	System.out.println(host);
+    	System.out.println(port);
         try (Socket socket = new Socket(host, port);
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
             writer.write(message);

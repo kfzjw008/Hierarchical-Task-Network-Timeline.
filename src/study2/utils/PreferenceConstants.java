@@ -1,8 +1,8 @@
 package study2.utils;
 
 public class PreferenceConstants {
-    public static final String P_IP_ADDRESS = "192.168.137.1";
-    public static final String P_PORT = "80";
+    public static final String P_IP_ADDRESS = "192.168.137.140";
+    public static final String P_PORT = "12345";
 }
 /*
  * IPreferenceStore store = Activator.getDefault().getPreferenceStore();
