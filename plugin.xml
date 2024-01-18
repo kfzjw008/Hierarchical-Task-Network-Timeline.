@@ -98,6 +98,13 @@
             name="欢迎页"
             restorable="true">
       </view>
+            <view
+                  class="study2.views.ImageView"
+                  icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.png"
+                  id="study2.views.ImageView"
+                  name="回传图像"
+                  restorable="true">
+            </view>
       
       
    </extension>

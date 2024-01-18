@@ -34,7 +34,7 @@ public class perspective implements IPerspectiveFactory {
         IFolderLayout bottomLeftFolder = layout.createFolder("bottomLeft", IPageLayout.BOTTOM, 0.5f, "RIGHT");
         bottomLeftFolder.addView("study2.views.NezhaArchitectureConsoleView");
 		leftRIGHTFolder.addView("study2.views.editorView"); // 假设“插件操作台”的视图ID为 study2.views.PluginOperationView
-		
+		leftRIGHTFolder.addView("study2.views.ImageView");
 		IFolderLayout centerFolder = layout.createFolder("center", IPageLayout.TOP, 0.7f, editorArea);
 		centerFolder.addPlaceholder(editorArea);
 		centerFolder.addView("study2.views.WelcomeView");
