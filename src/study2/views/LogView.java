@@ -7,22 +7,64 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class LogView extends ViewPart {
     private StyledText styledText;
     private PrintStream originalOut;
+    private ServerSocket serverSocket;
+    private Thread serverThread;
 
+    private void startServer(int port) {
+        serverThread = new Thread(() -> {
+            try {
+                serverSocket = new ServerSocket(port);
+                System.out.println("[LOG] Listening for connections on port: " + port);
+
+                while (!Thread.currentThread().isInterrupted()) {
+                    Socket socket = serverSocket.accept();
+                    System.out.println("[LOG] Client connected: " + socket.getInetAddress().getHostAddress());
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        appendText(line + "\n");
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (serverSocket != null && !serverSocket.isClosed()) {
+                    try {
+                        serverSocket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        serverThread.start();
+    }
+    
+    
+    
     @Override
     public void createPartControl(Composite parent) {
         styledText = new StyledText(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.READ_ONLY);
       //  redirectSystemOutput();
 //(调试完成后打开)
         // 使用 System.out.println 输出文本
+        // 启动监听服务器
+        startServer(12348); // 在端口 12348 上启动服务器
         System.out.println("[INFO]SEMS已经正常启动！");
         System.out.println("[WARN]软件相关信息未配置");
         System.out.println("[ERR]软件运行在开发环境当中。");
@@ -93,9 +135,24 @@ public class LogView extends ViewPart {
 
     @Override
     public void dispose() {
+        // 停止服务器线程
+        if (serverThread != null && serverThread.isAlive()) {
+            serverThread.interrupt();
+        }
+        
+        // 关闭服务器套接字
+        if (serverSocket != null && !serverSocket.isClosed()) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
         System.setOut(originalOut); // 恢复标准输出
         super.dispose();
     }
+
 
     @Override
     public void setFocus() {
