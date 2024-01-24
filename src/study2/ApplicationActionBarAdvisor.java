@@ -30,6 +30,7 @@ import study2.actions.PrefenceAction2;
 import study2.actions.PreferenceAction;
 import study2.actions.RefreshDatabaseAction;
 import study2.actions.SampleAction;
+import study2.actions.SaveAction;
 import study2.actions.StartInternet2;
 
 import org.eclipse.jface.action.Action;
@@ -105,6 +106,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IWorkbenchAction preferenceAction1;
 	private Action openAction;
 	private Action openPAction;
+	private  SaveAction startStopSaveAction;
 	  private RefreshDatabaseAction refreshDatabaseAction;
 	 private CustomNewFileResourceWizard customNewFileWizardAction;
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
@@ -116,7 +118,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	        register(refreshDatabaseAction);
 		 // 创建自定义的新建文件向导操作
         openCustomNewFileWizardAction = new OpenCustomNewFileWizardAction();
-        
+        // 创建动作
+        //SaveAction startStopSaveAction = new SaveAction(null);
+
         // 注册自定义的新建文件向导操作
         register(openCustomNewFileWizardAction);
         helpAction = new NezhaHelpAction();
@@ -219,6 +223,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	    dataMenu.add(refreshDatabaseAction);
 	    dataMenu.add(databaseConfigAction); // 数据库连接配置
 	    dataMenu.add(exportDataAction); // 数据导出
+	 //   dataMenu.add(startStopSaveAction);
 	    menuBar.add(fileMenu);
 	    menuBar.add(bjMenu);
 	    menuBar.add(cjMenu);
@@ -259,6 +264,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		toolbar.add(openCustomNewFileWizardAction);
 		toolbar.add(openAction);
 		toolbar.add(iSaveAction);
+		 // 	toolbar.add(startStopSaveAction);
 	     // 添加自定义的新建文件向导操作到 "文件" 菜单
 
 	

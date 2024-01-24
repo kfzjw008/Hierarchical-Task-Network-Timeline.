@@ -6,6 +6,9 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import study2.utils.CsvReaderUtil;
 import study2.utils.HexToTimeConverter;
@@ -13,12 +16,17 @@ import study2.utils.PreferenceConstants;
 import study2.utils.VariableUtil;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TelemetryDataView extends ViewPart {
@@ -31,6 +39,7 @@ public class TelemetryDataView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
+
     	  // 初始化 tableItems
         tableItems = new ArrayList<>();
     	  new Thread(new Runnable() {
@@ -90,6 +99,37 @@ public class TelemetryDataView extends ViewPart {
         for (TableColumn col : table.getColumns()) {
             col.pack();
         }
+        
+        
+        // 创建开始和停止收集数据的动作
+        startAction = new Action("数据归档") {
+            public void run() {
+                updateActionEnablement();
+                scheduleSave();
+            }
+        };
+
+        stopAction = new Action("停止归档") {
+            public void run() {
+            	   updateActionEnablement();
+          
+                stopSave();
+            }
+        };
+        startAction.setEnabled(true);  // 默认情况下，开始按钮可用
+        stopAction.setEnabled(false); // 停止按钮默认不可用
+        // 添加动作到工具栏
+        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+        toolbar.add(startAction);
+        toolbar.add(stopAction);
+
+        // 添加动作到菜单
+        IMenuManager menu = getViewSite().getActionBars().getMenuManager();
+        menu.add(startAction);
+        menu.add(stopAction);
+        
+        
+        
     }
     private void listenForData() {
         try (ServerSocket serverSocket = new ServerSocket(Integer.parseInt(PreferenceConstants.P_PORT))) {
@@ -183,8 +223,86 @@ public class TelemetryDataView extends ViewPart {
         return hexString.toString();
     }
 
+    private boolean saveScheduled = false;
+    private String csvFilename;
 
+    public void scheduleSave() {
+        saveScheduled = true;
+        updateActionEnablement();
+        // 使用当前日期时间作为文件名
+        if (csvFilename == null) {
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            csvFilename = "savedatas/" + timestamp + ".csv";
+        }
+        try (PrintWriter out = new PrintWriter(new FileOutputStream(csvFilename, true))) {
+            StringBuilder sb = new StringBuilder();
+            
+            for (TableItem item : table.getItems()) {
+                // 假设第二列是"原始数据"，第三列是"解析数据"
+                String rawData = item.getText(1);
+                String parsedData = item.getText(1);
+                sb.append(rawData).append(",").append(parsedData).append(",");
+            }
+            // 移除最后一个多余的逗号
+            if (sb.length() > 0) {
+                sb.setLength(sb.length() - 1);
+            }
+            // 写入CSV文件的一行中
+            out.println(sb.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Runnable saveRunnable = new Runnable() {
+            public void run() {
+                if (!saveScheduled) {
+                    return; // 如果不再需要保存，停止执行
+                }
+                
+                saveData(); // 调用保存数据的方法
+                Display.getCurrent().timerExec(1000, this); // 1000毫秒后再次执行
+            }
+        };
+        Display.getCurrent().timerExec(1000, saveRunnable); // 启动定时任务
+    }
 
+    public void stopSave() {
+    	
+        saveScheduled = false;
+        updateActionEnablement();
+    }
+    private void updateActionEnablement() {
+        boolean isSaving = saveScheduled; // 假设saveScheduled是用来追踪保存状态的变量
+        startAction.setEnabled(!isSaving);
+        stopAction.setEnabled(isSaving);
+    }
+    private Action startAction;
+    private Action stopAction;
+
+    private void saveData() {
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                try (PrintWriter out = new PrintWriter(new FileOutputStream(csvFilename, true))) {
+                    StringBuilder sb = new StringBuilder();
+                    
+                    for (TableItem item : table.getItems()) {
+                        // 假设第二列是"原始数据"，第三列是"解析数据"
+                        String rawData = item.getText(2);
+                        String parsedData = item.getText(3);
+                        sb.append(rawData).append(",").append(parsedData).append(",");
+                    }
+                    // 移除最后一个多余的逗号
+                    if (sb.length() > 0) {
+                        sb.setLength(sb.length() - 1);
+                    }
+                    // 写入CSV文件的一行中
+                    out.println(sb.toString());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 
 

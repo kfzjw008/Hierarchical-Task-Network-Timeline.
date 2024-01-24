@@ -204,17 +204,17 @@ public class NezhaArchitectureConsoleView extends ViewPart {
 
     private void populateTree(Tree tree) {
         TreeItem item1 = new TreeItem(tree, SWT.NONE);
-        item1.setText("宏指令 1");
+        item1.setText("哪吒架构预开机");
         item1.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
-        item1.setData("aaa");
+        item1.setData("000AAA");
         TreeItem item2 = new TreeItem(tree, SWT.NONE);
-        item2.setText("宏指令 2");
+        item2.setText("哪吒架构启动");
         item2.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
-        item2.setData("bbb");
+        item2.setData("000BBB");
         TreeItem item3 = new TreeItem(tree, SWT.NONE);
-        item3.setText("宏指令 3");
+        item3.setText("哪吒架构关闭");
         item3.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
-        item3.setData("ccc");
+        item3.setData("000CCC");
         TreeItem item4 = new TreeItem(tree, SWT.NONE);
         item4.setText("宏指令 4");
         item4.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT));
