@@ -33,7 +33,7 @@ public class Activator extends AbstractUIPlugin {
 	    System.out.println("Activator start method called."); // 日志输出或断点
 	    plugin = this;
 	    IPreferenceStore store = getPreferenceStore();
-	    store.setDefault(PreferenceConstants.P_IP_ADDRESS, "192.168.0.106");
+	    store.setDefault(PreferenceConstants.P_IP_ADDRESS, "192.168.0.103");
 	    store.setDefault(PreferenceConstants.P_PORT, 12345);
 	}
 
